@@ -1,0 +1,54 @@
+body {
+  text-align: center;
+}
+
+output {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.companies {
+  font-size: 30px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgrey;
+  flex-direction: column;
+}
+
+.users:hover {
+  color: #cc5200;
+  cursor: pointer;
+}
+
+.expand {
+  border: 1px solid black;
+  font-size: 30px;
+  width: 40px;
+  background-color: #cc5200;
+}
+
+.expand:hover {
+  background-color: #ff6600;
+  cursor: pointer;
+}
+
+.clicked {
+  border: 1px solid black;
+  font-size: 30px;
+  width: 40px;
+  background-color: goldenrod;
+}
+
+.clicked:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
