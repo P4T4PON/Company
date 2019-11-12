@@ -41,14 +41,6 @@ output {
   cursor: pointer;
 }
 
-.clicked {
-  border: 1px solid black;
-  font-size: 30px;
-  width: 40px;
-  background-color: goldenrod;
-}
-
-.clicked:hover {
-  background-color: yellow;
-  cursor: pointer;
+.display-none {
+  display: none;
 }

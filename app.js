@@ -1,74 +1,63 @@
-window.addEventListener('load', getCompanies);
+window.addEventListener("load", getCompanies);
 
-//expand = document.querySelector('.expand').addEventListener('click', exp);
-
-let output = document.getElementById('output');
+let output = document.getElementById("output");
 
 function getCompanies() {
-  fetch('db.json')
+  fetch("db.json")
     .then(function(response) {
       return response.json();
     })
     .then(function(data) {
-      function getUsers(e) {
-        etc = e.target.previousSibling;
+      let companies = data.companies.sort((x, y) =>
+        data.users.filter(obj => {
+          return obj.uris.company == x.uri;
+        }).length >
+        data.users.filter(obj => {
+          return obj.uris.company == y.uri;
+        }).length
+          ? 1
+          : data.users.filter(obj => {
+              return obj.uris.company == x.uri;
+            }).length <
+            data.users.filter(obj => {
+              return obj.uris.company == y.uri;
+            }).length
+          ? -1
+          : 0
+      );
+      data.companies = companies;
+      for (let i = 0; i < data.companies.length; i++) {
+        output.innerHTML += `<div class="center"><div class="companies" id=${i}><div class="companyName">${data.companies[i].name}</div></div><div class = "expand btn">+</div></div></br>`;
+      }
+      document.querySelectorAll(".btn").forEach(function(e) {
+        etc = e.previousSibling;
 
-        //if ((e.target.innerHTML = '')) {
-
-        //console.log('dupa');
-        //}
-
-        if (e.target.innerText === '+') {
-          for (let j = 0; j < 1; j++) {
-            data.users.filter(function(ur) {
-              if (ur.uris.company === data.companies[etc.id].uri) {
-                //console.log(ur.name);
-                etc.innerHTML += `<div class="users">Name: ${ur.name} : </br>Email: ${ur.email}</br></div>`;
-                document.querySelectorAll('.users').forEach(function(el) {
-                  el.addEventListener('click', function(e) {
-                    //console.log(ur);
-                  });
-                });
-              }
-            });
+        data.users.filter(function(ur) {
+          if (ur.uris.company === data.companies[etc.id].uri) {
+            etc.innerHTML += `<div class="display-none">Name: ${ur.name} : </br>Email: ${ur.email}</br></div>`;
           }
-        }
+        });
 
-        if (e.target.innerHTML === '+') {
-          console.log(e.target);
-          e.target.innerHTML = '-';
-          e.target.className = 'clicked';
-
-          document.querySelectorAll('.clicked').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-              e.target.className = 'expand';
-              e.target.innerText = '+';
-
-              //e.target.parentElement.children[0].children[0].innerText
-              e.target.parentElement.children[0].innerText =
-                e.target.parentElement.children[0].children[0].innerText;
-              console.log(e.target);
-            });
-          });
-        }
-      }
-
-      for (let i = 0; i < 1000; i++) {
-        output.innerHTML += `<div class="center"><div class="companies" id=${i}><div class="companyName">${data.companies[i].name}</div></div><div class = "expand">+</div></div></br>`;
-      }
-      expand = document.querySelectorAll('.expand');
-      expand.forEach(function(el) {
-        el.addEventListener('click', getUsers);
+        e.addEventListener("click", function(el) {
+          for (
+            let i = 1;
+            i < el.target.parentElement.children[0].children.length;
+            i++
+          ) {
+            if (el.target.innerHTML === "+") {
+              el.target.parentElement.children[0].children[i].className =
+                "users";
+            } else if (el.target.innerHTML === "-") {
+              el.target.parentElement.children[0].children[i].className =
+                "display-none";
+            }
+          }
+          if (el.target.innerHTML === "-") {
+            el.target.innerHTML = "+";
+          } else {
+            el.target.innerHTML = "-";
+          }
+        });
       });
     });
-
-  /* 
-  .forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      console.log(dupa);
-      console.log('dupa');
-    });
-    
-  });
-  */
 }
